@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="Login"
-            android:textSize="20sp"
+            android:fontFamily="@font/headland_one"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
             android:layout_gravity="center"/>
@@ -83,7 +84,7 @@
 
 
         <TextView
-            android:text="New here? Sign up"
+            android:text="@string/new_here_sign_up_text"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="@color/link_color"

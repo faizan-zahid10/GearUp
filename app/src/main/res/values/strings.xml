@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GearUp</string>
+    <string name="already_account_text"><u>Already have an account? Login</u></string>
+    <string name="new_here_sign_up_text"><u>New here? Sign up</u></string>
 </resources>

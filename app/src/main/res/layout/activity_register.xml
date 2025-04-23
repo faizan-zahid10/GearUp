@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Register">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!-- Top Image -->
+    <ImageView
+        android:id="@+id/register_top_image"
+        android:layout_width="380dp"
+        android:layout_gravity="center"
+        android:layout_height="220dp"
+        android:src="@drawable/register_image"
+        />
+
+    <TextView
+        android:id="@+id/tv_register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/headland_one"
+        android:text="Create Account"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full Name"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_fullname"
+        android:background="@drawable/text_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="Muhammad Faizan Zahid"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="8dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop Name"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_shop_name"
+        android:background="@drawable/text_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="Auto Care"
+        android:inputType="text"
+        android:layout_marginBottom="8dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:background="@drawable/text_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="03219436000"
+        android:inputType="phone"
+        android:layout_marginBottom="8dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop Address"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_shop_address"
+        android:background="@drawable/text_border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="Faisal Town, Lahore, Pakistan"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="8dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_border"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="faizan@gmail.com"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_border"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="ab123"
+        android:inputType="textPassword"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Password"
+        android:textSize="@dimen/inp_text_label"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <EditText
+        android:id="@+id/et_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_border"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="@dimen/inp_text_size"
+        android:hint="ab123"
+        android:inputType="textPassword"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="@dimen/inp_text_label"
+        android:backgroundTint="@color/login_btn_bg"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tv_login_redirect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/already_account_text"
+        android:textColor="@color/link_color"
+        android:layout_marginBottom="35dp"
+
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
+</ScrollView>
