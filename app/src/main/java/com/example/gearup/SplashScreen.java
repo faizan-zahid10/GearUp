@@ -35,7 +35,7 @@ public class SplashScreen extends AppCompatActivity {
         apply_animation();
 
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             startActivity(intent);
             finish();
         }, 5000);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#F2A62C"
+    android:background="#0B0700"
     tools:context=".SplashScreen">
 
     <androidx.cardview.widget.CardView
