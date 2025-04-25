@@ -13,6 +13,9 @@
         android:theme="@style/Theme.GearUp"
         tools:targetApi="31">
         <activity
+            android:name=".CustomerDetails"
+            android:exported="false" />
+        <activity
             android:name=".AddCustomer"
             android:exported="false" />
         <activity
