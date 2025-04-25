@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddCustomer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <!-- Heading -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Customer"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+        <!-- Customer Name -->
+        <EditText
+            android:id="@+id/etCustomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Customer Name"
+            android:background="@drawable/text_border"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Phone -->
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="Phone Number"
+            android:background="@drawable/text_border"
+            android:layout_marginTop="20dp"/>
+
+        <!-- Address -->
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:background="@drawable/text_border"
+            android:layout_marginTop="20dp"/>
+
+        <!-- Vehicle Name -->
+        <EditText
+            android:id="@+id/etVehicleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vehicle Name"
+            android:background="@drawable/text_border"
+            android:layout_marginTop="20dp"/>
+
+        <!-- Vehicle Type (Radio Buttons) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Type"
+            android:textSize="@dimen/inp_text_label"
+            android:textColor="#FF0500"
+            android:textStyle="bold"
+            android:layout_marginTop="65dp" />
+
+        <RadioGroup
+            android:id="@+id/rgVehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbCar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Car"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbBike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bike"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbBicycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bicycle"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbRickshaw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rickshaw"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbBus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bus"/>
+        </RadioGroup>
+
+        <!-- Service Type (Radio Group) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service Type"
+            android:textSize="@dimen/inp_text_label"
+            android:textColor="#FF0500"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp" />
+
+        <RadioGroup
+            android:id="@+id/rgServiceType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbOilChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oil Change"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbRepair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repair"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbTireChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tire Change"
+                android:layout_marginEnd="3dp"/>
+
+            <RadioButton
+                android:id="@+id/rbBatteryCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Battery Check"/>
+
+        </RadioGroup>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:backgroundTint="@color/cancel_btn_bg"
+                android:layout_marginRight="40dp" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/save_btn_bg"
+                android:text="Save" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
