@@ -10,7 +10,7 @@
         android:id="@+id/textServicesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Service Records"
+        android:text="Services Tab"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check or add service records"
+        android:text="here services work will be done inshAllah"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal" />
 
