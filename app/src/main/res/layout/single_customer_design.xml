@@ -49,8 +49,8 @@
             <!-- Vehicle Image -->
             <ImageView
                 android:id="@+id/ivVehicle"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/text_border"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/icon_bicycle" />
@@ -67,15 +67,13 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/icon_edit"
-                    android:contentDescription="Edit" />
+                    android:src="@drawable/icon_edit" />
 
                 <ImageView
                     android:id="@+id/btnDelete"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/icon_delete"
-                    android:contentDescription="Delete" />
+                    android:src="@drawable/icon_delete" />
             </LinearLayout>
         </LinearLayout>
 
