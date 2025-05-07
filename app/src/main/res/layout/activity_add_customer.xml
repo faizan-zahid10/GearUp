@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".AddCustomer">
 
     <LinearLayout
@@ -146,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tire Change"
-                android:layout_marginEnd="3dp"/>
+                android:layout_marginEnd="0.9dp"/>
 
             <RadioButton
                 android:id="@+id/rbBatteryCheck"
