@@ -13,6 +13,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Register extends AppCompatActivity {
 
     EditText etFullname, etShopName, etPhone, etShopAddress, etEmail, etPassword, etConfirmPassword;
@@ -43,7 +46,10 @@ public class Register extends AppCompatActivity {
             if (fullname.isEmpty() || shopName.isEmpty() || phone.isEmpty() || address.isEmpty()
                     || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(Register.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            } else if (!password.equals(confirmPassword)) {
+                Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             } else {
+                signUpUser(email, password);
                 Toast.makeText(Register.this, "User Registered", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Register.this, Login.class));
                 finish();
@@ -55,6 +61,24 @@ public class Register extends AppCompatActivity {
             startActivity(new Intent(Register.this, Login.class));
         });
     }
+
+    private void signUpUser(String email, String password){
+        FirebaseAuth authInstance = FirebaseAuth.getInstance();
+
+        authInstance.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Registration successful
+                        FirebaseUser registeredUser = authInstance.getCurrentUser();
+                        Toast.makeText(Register.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                        // Proceed to the next screen (e.g., HomeActivity)
+                    } else {
+                        // If registration fails
+                        Toast.makeText(Register.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private void init(){
         etFullname = findViewById(R.id.et_fullname);
         etShopName = findViewById(R.id.et_shop_name);
