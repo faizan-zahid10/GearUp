@@ -4,4 +4,7 @@
     <string name="new_here_sign_up_text"><u>New here? Sign up</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Customer_card_line">Get Connected with Customers!</string>
+    <string name="Service_card_line">Schedule a new Service</string>
+    <string name="Service_schedule_card_line">View your Service Schedule</string>
 </resources>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,262 +7,214 @@
     android:padding="10dp"
     tools:context=".home">
 
-<!--    <TextView-->
-<!--        android:id="@+id/textHomeTitle"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Welcome to GearUp"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_gravity="center_horizontal"-->
-<!--        android:paddingBottom="16dp" />-->
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="This is your Home Dashboard"-->
-<!--        android:textSize="16sp"-->
-<!--        android:layout_gravity="center_horizontal" />-->
-
     <TextView
-        android:id="@+id/appTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GearUp"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="#0B3D91" />
+        android:textColor="#0B3D91"
+        android:paddingBottom="4dp" />
 
-    <!-- Welcome Text -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome Back..."
+        android:text="Welcome back! Let’s keep the wheels turning."
         android:textSize="16sp"
         android:gravity="center"
-        android:layout_marginTop="4dp"
-        android:textColor="#333" />
+        android:textColor="#333"
+        android:paddingBottom="16dp" />
 
-    <!-- Quick Stats (Icons with Text Below) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginTop="16dp"
-        android:weightSum="3">
+        android:weightSum="2">
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:layout_height="100dp"
             card_view:cardCornerRadius="12dp"
             card_view:cardElevation="4dp"
-            android:background="#FFFFFF">
-
+            android:backgroundTint="#FFF9C4"
+            android:layout_marginEnd="8dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
+                android:padding="16dp"
+                android:gravity="center">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="🔧"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/customer_count_text"
+                    android:text="..."
+                    android:textColor="#6D4C41"
+                    android:fontFamily="@font/headland_one"
                     android:textSize="32sp"
+                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="#0B3D91" />
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Today: 3"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:textColor="#0B3D91" />
-            </LinearLayout>
+                    android:layout_marginBottom="8dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Customers Served"
+                    android:textSize="16sp"
+                    android:gravity="center" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:layout_height="100dp"
             card_view:cardCornerRadius="12dp"
             card_view:cardElevation="4dp"
-            android:background="#FFFFFF">
-
+            android:backgroundTint="#9EF2A0"
+            android:layout_marginStart="8dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
+                android:padding="16dp"
+                android:gravity="center">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="🚗"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/service_count_text"
+                    android:text="..."
+                    android:textColor="#424242"
+                    android:fontFamily="@font/headland_one"
                     android:textSize="32sp"
+                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="#0B3D91" />
+                    android:layout_marginBottom="8dp" />
+
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="Customers: 12"
+                    android:layout_height="wrap_content"
+                    android:text="Services Given"
                     android:textSize="16sp"
-                    android:gravity="center"
-                    android:textColor="#0B3D91" />
+                    android:gravity="center" />
             </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:layout_height="100dp"
-            card_view:cardCornerRadius="12dp"
-            card_view:cardElevation="4dp"
-            android:background="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="⏳"
-                    android:textSize="32sp"
-                    android:gravity="center"
-                    android:textColor="#0B3D91" />
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Upcoming: 4"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:textColor="#0B3D91" />
-            </LinearLayout>
-
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <!-- Action Buttons with Icons on Left and Text Centered -->
-
-    <!-- Add New Service Record -->
-    <androidx.cardview.widget.CardView
+    <!-- Main Features (Customer and Services Cards) -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        card_view:cardCornerRadius="16dp"
-        card_view:cardElevation="4dp"
-        android:background="#FFCDD2"> <!-- Soft red -->
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:padding="10dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Customer Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/customerCard"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="12dp">
-
-            <!-- Icon on the left -->
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/app_logo"
-                android:contentDescription="Add Service Icon" />
-
-            <!-- Text centered -->
-            <TextView
-                android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="➕ Add New Service Record"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:layout_marginLeft="12dp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1"
+                    android:background="@drawable/circle_background"
+                    android:textSize="32sp"
+                    android:layout_marginEnd="16dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Customer_card_line"
+                    android:textSize="19.5sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-    <!-- View Service History -->
-    <androidx.cardview.widget.CardView
+        <!-- New Service Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/serviceScheduleCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textSize="32sp"
+                    android:background="@drawable/circle_background2"
+                    android:layout_marginEnd="16dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Service_card_line"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Schedule Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/serviceViewCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="3"
+                    android:background="@drawable/circle_background3"
+                    android:textSize="32sp"
+                    android:layout_marginEnd="16dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Service_schedule_card_line"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        card_view:cardCornerRadius="16dp"
-        card_view:cardElevation="4dp"
-        android:background="#FFFFFF">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="12dp">
-
-            <!-- Icon on the left -->
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/app_logo"
-                android:contentDescription="View Service Icon" />
-
-            <!-- Text centered -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="📚 View Service History"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:layout_marginLeft="12dp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- Upcoming Checkups -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        card_view:cardCornerRadius="16dp"
-        card_view:cardElevation="4dp"
-        android:background="#FFFFFF">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="12dp">
-
-            <!-- Icon on the left -->
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/app_logo"
-                android:contentDescription="Upcoming Checkups Icon" />
-
-            <!-- Text centered -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="🔔 Upcoming Checkups"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:layout_marginLeft="12dp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        android:layout_height="0dp"
+        android:text="💡 Always recommend tire rotation every 10,000 km!"
+        android:textSize="14sp"
+        android:textColor="#666"
+        android:padding="14dp"
+        android:gravity="bottom"
+        android:layout_weight="1" />
 
 </LinearLayout>
