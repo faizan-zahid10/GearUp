@@ -15,9 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +47,13 @@ public class Customers extends Fragment {
 
     RecyclerView rvCustomers;
     FloatingActionButton fabAddCustomer;
+    ProgressBar progressBar;
     CustomerAdapter adapter;
     private List<CustomerData> customerList;
 
     private ActivityResultLauncher<Intent> addCustomerLauncher;
+
+    private DatabaseReference databaseReference;  // Firebase reference
 
 
 
@@ -93,20 +103,23 @@ public class Customers extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        // Extract data
-                        Intent data = result.getData();
-                        String name = data.getStringExtra("name");
-                        String phone = data.getStringExtra("phone");
-                        String address = data.getStringExtra("address");
-                        String vehicle = data.getStringExtra("vehicle");
-                        String vehicleType = data.getStringExtra("vehicleType");
-                        String service = data.getStringExtra("service");
+                        Toast.makeText(getActivity(), "New Customer added", Toast.LENGTH_SHORT).show();
 
-                        // Add to list and notify adapter
-                        int newId = customerList.size() + 1;
-                        CustomerData newCustomer = new CustomerData(newId, name, phone, address, vehicle, vehicleType, service);
-                        customerList.add(newCustomer);
-                        adapter.notifyItemInserted(customerList.size() - 1);
+                        // Extract data
+//                        Intent data = result.getData();
+//                        String name = data.getStringExtra("name");
+//                        String phone = data.getStringExtra("phone");
+//                        String address = data.getStringExtra("address");
+//                        String vehicle = data.getStringExtra("vehicle");
+//                        String vehicleType = data.getStringExtra("vehicleType");
+//                        String service = data.getStringExtra("service");
+//
+//                        // Add to list and notify adapter
+//                        int newId = customerList.size() + 1;
+//                        CustomerData newCustomer = new CustomerData(name, phone, address, vehicle, vehicleType, service);
+//                        customerList.add(newCustomer);
+//                        Toast.makeText(getActivity(), "New Customer added", Toast.LENGTH_SHORT).show();
+//                        adapter.notifyItemInserted(customerList.size() - 1);
                     }
                 }
         );
@@ -116,6 +129,7 @@ public class Customers extends Fragment {
         // Initialize views
         rvCustomers = view.findViewById(R.id.rvCustomers);
         fabAddCustomer = view.findViewById(R.id.fabAddCustomer);
+        progressBar = view.findViewById(R.id.progressBar);
         customerList = new ArrayList<>();
 
 //        adapter = new CustomerAdapter(getContext(), customerList);
@@ -123,8 +137,11 @@ public class Customers extends Fragment {
 //        rvCustomers.setAdapter(adapter);
 
         // Adding sample customer data to list
-        customerList.add(new CustomerData(1, "Faizan Zahid", "+92 300 1234567", "123 Street, Lahore", "CD70", "Bike", "Oil Change"));
-        customerList.add(new CustomerData(2, "Hamid Khan", "+92 301 1112233", "456 Avenue, Karachi", "Swift", "Car", "Wheel Alignment"));
+//        customerList.add(new CustomerData("Faizan Zahid", "+92 300 1234567", "123 Street, Lahore", "CD70", "Bike", "Oil Change"));
+//        customerList.add(new CustomerData("Hamid Khan", "+92 301 1112233", "456 Avenue, Karachi", "Swift", "Car", "Wheel Alignment"));
+
+        // Setting up Firebase reference to "customers" node
+        databaseReference = FirebaseDatabase.getInstance().getReference("customers");
 
         adapter = new CustomerAdapter(getContext(), customerList, customer -> {
             Intent intent = new Intent(getContext(), CustomerDetails.class);
@@ -144,13 +161,40 @@ public class Customers extends Fragment {
         rvCustomers.setLayoutManager(new LinearLayoutManager(getContext()));
         rvCustomers.setAdapter(adapter);
 
+        // Fetch customer data from Firebase
+        fetchCustomerData();
+
         // Notify adapter about the data change
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
 
         // Set up FloatingActionButton click listener
         fabAddCustomer.setOnClickListener(v -> {
             Intent i = new Intent(getContext(), AddCustomer.class);
             addCustomerLauncher.launch(i);
+        });
+    }
+
+    private void fetchCustomerData(){
+        progressBar.setVisibility(View.VISIBLE);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                customerList.clear();  // Clear existing data
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    CustomerData customer = snapshot.getValue(CustomerData.class);
+                    if (customer != null) {
+                        customer.setId(snapshot.getKey());  // Set Firebase ID
+                        customerList.add(customer);  // Add customer to list
+                    }
+                }
+                adapter.notifyDataSetChanged();  // Notify adapter of data change
+                progressBar.setVisibility(View.GONE);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "Failed to load data.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

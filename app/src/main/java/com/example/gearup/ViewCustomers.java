@@ -36,8 +36,8 @@ public class ViewCustomers extends AppCompatActivity {
 
         init();
 
-        customerList.add(new CustomerData(1,"Faizan Zahid", "+92 300 1234567", "123 Street, Lahore", "CD70", "Bike", "Oil Change"));
-        customerList.add(new CustomerData(2,"Hamid Khan", "+92 301 1112233", "456 Avenue, Karachi", "Swift", "Car", "Wheel Alignment"));
+//        customerList.add(new CustomerData(1,"Faizan Zahid", "+92 300 1234567", "123 Street, Lahore", "CD70", "Bike", "Oil Change"));
+//        customerList.add(new CustomerData(2,"Hamid Khan", "+92 301 1112233", "456 Avenue, Karachi", "Swift", "Car", "Wheel Alignment"));
         adapter.notifyDataSetChanged();
 
 //        for clicking on add button

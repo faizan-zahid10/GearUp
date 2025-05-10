@@ -14,6 +14,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class AddCustomer extends AppCompatActivity {
 
     EditText etCustomerName, etPhone, etAddress, etVehicleName;
@@ -55,16 +59,37 @@ public class AddCustomer extends AppCompatActivity {
             String vehicleType = selectedVehicle.getText().toString();
             String serviceType = selectedService.getText().toString();
 
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("name", name);
-            resultIntent.putExtra("phone", phone);
-            resultIntent.putExtra("address", address);
-            resultIntent.putExtra("vehicle", vehicleName);
-            resultIntent.putExtra("vehicleType", vehicleType);
-            resultIntent.putExtra("service", serviceType);
+            // Create customer data
+            CustomerData customer = new CustomerData(name, phone, address, vehicleName, vehicleType, serviceType);
 
-            setResult(RESULT_OK, resultIntent);
-            finish();
+            // Get reference to Firebase database
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference("customers");
+
+            // Generate unique key for customer
+            String customerId = database.push().getKey(); // Generate unique key
+            customer.setId(customerId); // Set the generated ID to the customer object
+
+            // Save customer data to Firebase Realtime Database
+            if (customerId != null) {
+                database.child(customerId).setValue(customer)
+                        .addOnSuccessListener(aVoid -> {
+//                            Toast.makeText(this, "Customer added", Toast.LENGTH_SHORT).show();
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("name", name);
+                            resultIntent.putExtra("phone", phone);
+                            resultIntent.putExtra("address", address);
+                            resultIntent.putExtra("vehicle", vehicleName);
+                            resultIntent.putExtra("vehicleType", vehicleType);
+                            resultIntent.putExtra("service", serviceType);
+                            setResult(RESULT_OK, resultIntent);
+                            finish();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Failed to add customer: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            } else {
+                Toast.makeText(this, "Failed to generate customer ID", Toast.LENGTH_SHORT).show();
+            }
 
         });
     }

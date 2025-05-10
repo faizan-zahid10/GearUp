@@ -2,7 +2,7 @@ package com.example.gearup;
 
 //this is customer model class
 public class CustomerData {
-    private int id;
+    private String id;
     private String name;
     private String phone;
     private String address;
@@ -10,9 +10,11 @@ public class CustomerData {
     private String vehicleType;
     private String serviceType;
 
-    public CustomerData(int id, String name, String phone, String address,
+
+    public CustomerData() {}
+
+    public CustomerData(String name, String phone, String address,
                     String vehicleName, String vehicleType, String serviceType) {
-        this.id = id;
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -21,11 +23,11 @@ public class CustomerData {
         this.serviceType = serviceType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

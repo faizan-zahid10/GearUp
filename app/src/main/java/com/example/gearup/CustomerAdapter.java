@@ -15,6 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> {
@@ -87,14 +90,30 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                     .setTitle("Delete Customer")
                     .setMessage("Are you sure you want to delete this customer?")
                     .setPositiveButton("Yes", (dialog, which) -> {
-                        customerList.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, customerList.size());
-                        Toast.makeText(context, "Customer deleted", Toast.LENGTH_SHORT).show();
+                        // Get customer ID
+                        String customerId = customer.getId();
+
+                        // Firebase database reference
+                        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("customers").child(customerId);
+
+                        // Delete from Firebase
+                        dbRef.removeValue()
+                                .addOnSuccessListener(unused -> {
+                                    customerList.remove(position);
+//                                    notifyItemRemoved(position);
+//                                    notifyItemRangeChanged(position, customerList.size());
+//                                    notifyDataSetChanged();
+                                    Toast.makeText(context, "Customer deleted from database", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(context, "Failed to delete customer", Toast.LENGTH_SHORT).show();
+                                });
                     })
                     .setNegativeButton("No", null)
                     .show();
         });
+
+
 
 //edit
         holder.btnEdit.setOnClickListener(v -> {
@@ -133,11 +152,24 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 customer.setAddress(etAddress.getText().toString());
                 customer.setVehicleName(etVehicleName.getText().toString());
 
-                // Notify the adapter that the customer details have been updated
-                notifyItemChanged(holder.getAdapterPosition());
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("customers").child(customer.getId());
+                dbRef.setValue(customer)
+                        .addOnSuccessListener(unused -> {
+                            // Notify the adapter that the customer details have been updated
+                            notifyItemChanged(holder.getAdapterPosition());
 
-                // Show a Toast to confirm the update
-                Toast.makeText(context, "Customer updated", Toast.LENGTH_SHORT).show();
+                            // Show a Toast to confirm the update
+                            Toast.makeText(context, "Customer updated in database", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(context, "Failed to update customer", Toast.LENGTH_SHORT).show();
+                        });
+
+//                // Notify the adapter that the customer details have been updated
+//                notifyItemChanged(holder.getAdapterPosition());
+//
+//                // Show a Toast to confirm the update
+//                Toast.makeText(context, "Customer updated", Toast.LENGTH_SHORT).show();
 
                 // Dismiss the dialog
                 dialog.dismiss();

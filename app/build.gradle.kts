@@ -35,7 +35,7 @@ android {
 dependencies {
     implementation (libs.firebase.auth)
     implementation (libs.xcom.firebase.core)
-
+    implementation(libs.firebase.firestore)
 
     implementation(libs.appcompat)
     implementation(libs.material)
