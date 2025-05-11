@@ -1,36 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/item_service_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:background="@drawable/bg_card" android:layout_marginVertical="6dp">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="12dp">
 
-    <TextView
-        android:id="@+id/tv_customer_name"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customer: Ali Khan"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="16sp" />
+        android:padding="12dp">
 
-    <TextView
-        android:id="@+id/tv_customer_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Phone: 03001234567"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+        <LinearLayout
+            android:id="@+id/info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_vehicle_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vehicle: ABC-1234"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tv_customer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Name"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_service_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Time: 2:00 PM"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_customer_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03001234567"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_vehicle_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle: ABC-123"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tv_vehicle_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type: Sedan"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+            <TextView
+                android:id="@+id/tv_service_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: 10:00 AM"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttons_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_edit_service"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/text_border"
+                android:src="@drawable/icon_edit"
+                android:contentDescription="Edit"
+                android:scaleType="centerInside" />
+
+            <ImageButton
+                android:id="@+id/btn_delete_service"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/text_border"
+                android:src="@drawable/icon_delete"
+                android:contentDescription="Delete"
+                android:scaleType="centerInside" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

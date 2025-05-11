@@ -1,7 +1,9 @@
 package com.example.gearup;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,10 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.gearup.models.ServiceModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,19 +35,13 @@ public class Services extends Fragment {
     private TextView tvSelectedDate;
     private RecyclerView recyclerView;
     private ServiceAdapter adapter;
+    private DatabaseReference servicesRef;
+    private TextView tvNoServices;
 
-    public Services() {
-        // Required empty public constructor
-    }
+    private final SimpleDateFormat keyFormatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+    private final SimpleDateFormat displayFormatter = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
 
-    public static Services newInstance(String param1, String param2) {
-        Services fragment = new Services();
-        Bundle args = new Bundle();
-        args.putString("param1", param1);
-        args.putString("param2", param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public Services() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,32 +53,34 @@ public class Services extends Fragment {
         ImageButton btnPrevDate = view.findViewById(R.id.btn_prev_date);
         ImageButton btnNextDate = view.findViewById(R.id.btn_next_date);
         recyclerView = view.findViewById(R.id.recycler_services);
+        tvNoServices = view.findViewById(R.id.tv_no_services);  // Reference for the "No services" text
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new ServiceAdapter(new ArrayList<>());
+        servicesRef = FirebaseDatabase.getInstance().getReference("services");
+
+        ServiceAdapter.OnServiceClickListener listener = new ServiceAdapter.OnServiceClickListener() {
+            @Override
+            public void onEdit(ServiceModel service, String key) {
+                showEditServiceDialog(service, key);
+            }
+
+            @Override
+            public void onDelete(String key) {
+                String dateKey = keyFormatter.format(selectedDate.getTime());
+                servicesRef.child(dateKey).child(key).removeValue().addOnSuccessListener(unused -> {
+                    loadServicesForDate(selectedDate);
+                });
+            }
+        };
+
+        adapter = new ServiceAdapter(new ArrayList<>(), listener);
         recyclerView.setAdapter(adapter);
 
         updateDateDisplay();
         loadServicesForDate(selectedDate);
 
-        tvSelectedDate.setOnClickListener(v -> {
-            int year = selectedDate.get(Calendar.YEAR);
-            int month = selectedDate.get(Calendar.MONTH);
-            int day = selectedDate.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    getContext(),
-                    (DatePicker view1, int selectedYear, int selectedMonth, int selectedDay) -> {
-                        selectedDate.set(Calendar.YEAR, selectedYear);
-                        selectedDate.set(Calendar.MONTH, selectedMonth);
-                        selectedDate.set(Calendar.DAY_OF_MONTH, selectedDay);
-                        updateDateDisplay();
-                        loadServicesForDate(selectedDate);
-                    },
-                    year, month, day
-            );
-            datePickerDialog.show();
-        });
+        tvSelectedDate.setOnClickListener(v -> showDatePickerDialog());
 
         btnPrevDate.setOnClickListener(v -> {
             selectedDate.add(Calendar.DAY_OF_MONTH, -1);
@@ -91,35 +94,183 @@ public class Services extends Fragment {
             loadServicesForDate(selectedDate);
         });
 
+        FloatingActionButton fabAddService = view.findViewById(R.id.fab_add_service);
+        fabAddService.setOnClickListener(v -> showAddServiceDialog());
+
         return view;
     }
 
     private void updateDateDisplay() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
-        tvSelectedDate.setText(sdf.format(selectedDate.getTime()));
+        tvSelectedDate.setText(displayFormatter.format(selectedDate.getTime()));
     }
 
     private void loadServicesForDate(Calendar date) {
-        // This should be replaced by real filtering logic or database queries
-        SimpleDateFormat sdfKey = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-        String key = sdfKey.format(date.getTime());
+        String key = keyFormatter.format(date.getTime());
 
-        List<ServiceModel> services = new ArrayList<>();
+        servicesRef.child(key).get().addOnCompleteListener(task -> {
+            List<ServiceModel> services = new ArrayList<>();
+            List<String> keys = new ArrayList<>();
 
-        // Simulate different services on different days
-        switch (key) {
-            case "20250510":
-                services.add(new ServiceModel("Ali Khan", "03001234567", "ABC-123", "10:00 AM"));
-                services.add(new ServiceModel("Sara Ahmed", "03111234567", "XYZ-987", "11:30 AM"));
-                break;
-            case "20250511":
-                services.add(new ServiceModel("Usman Tariq", "03211234567", "DEF-456", "1:00 PM"));
-                break;
-            default:
-                services.add(new ServiceModel("No bookings", "-", "-", "-"));
-                break;
-        }
+            if (task.isSuccessful() && task.getResult().exists()) {
+                for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                    ServiceModel service = snapshot.getValue(ServiceModel.class);
+                    if (service != null) {
+                        services.add(service);
+                        keys.add(snapshot.getKey());
+                    }
+                }
+            }
 
-        adapter.updateData(services);
+            // If no services for the selected date, show "No services" message
+            if (services.isEmpty()) {
+                tvNoServices.setVisibility(View.VISIBLE); // Show the "No services" message
+                recyclerView.setVisibility(View.GONE); // Hide the RecyclerView
+            } else {
+                tvNoServices.setVisibility(View.GONE); // Hide the "No services" message
+                recyclerView.setVisibility(View.VISIBLE); // Show the RecyclerView
+            }
+
+            adapter.updateData(services, keys); // Update adapter with services
+        });
+    }
+
+    private void showDatePickerDialog() {
+        int year = selectedDate.get(Calendar.YEAR);
+        int month = selectedDate.get(Calendar.MONTH);
+        int day = selectedDate.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getContext(),
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    selectedDate.set(Calendar.YEAR, selectedYear);
+                    selectedDate.set(Calendar.MONTH, selectedMonth);
+                    selectedDate.set(Calendar.DAY_OF_MONTH, selectedDay);
+                    updateDateDisplay();
+                    loadServicesForDate(selectedDate);
+                },
+                year, month, day
+        );
+        datePickerDialog.show();
+    }
+
+    private void showAddServiceDialog() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_service, null);
+
+        EditText etName = dialogView.findViewById(R.id.et_customer_name);
+        EditText etPhone = dialogView.findViewById(R.id.et_customer_phone);
+        EditText etVehicle = dialogView.findViewById(R.id.et_vehicle_number);
+        EditText etType = dialogView.findViewById(R.id.et_vehicle_type);
+        EditText etTime = dialogView.findViewById(R.id.et_service_time);
+        EditText etDate = dialogView.findViewById(R.id.et_service_date);
+
+        Calendar serviceDate = Calendar.getInstance();
+        etDate.setText(displayFormatter.format(serviceDate.getTime()));
+
+        etDate.setOnClickListener(v -> {
+            int year = serviceDate.get(Calendar.YEAR);
+            int month = serviceDate.get(Calendar.MONTH);
+            int day = serviceDate.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePicker = new DatePickerDialog(getContext(), (view, y, m, d) -> {
+                Calendar picked = Calendar.getInstance();
+                picked.set(y, m, d);
+
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.HOUR_OF_DAY, 0);
+                today.set(Calendar.MINUTE, 0);
+                today.set(Calendar.SECOND, 0);
+                today.set(Calendar.MILLISECOND, 0);
+
+                if (picked.before(today)) {
+                    etDate.setError("Cannot select a past date");
+                } else {
+                    serviceDate.set(y, m, d);
+                    etDate.setText(displayFormatter.format(serviceDate.getTime()));
+                    etDate.setError(null);
+                }
+            }, year, month, day);
+
+            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePicker.show();
+        });
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Add New Service")
+                .setView(dialogView)
+                .setPositiveButton("Add", (dialog, which) -> {
+                    String name = etName.getText().toString().trim();
+                    String phone = etPhone.getText().toString().trim();
+                    String vehicle = etVehicle.getText().toString().trim();
+                    String type = etType.getText().toString().trim();
+                    String time = etTime.getText().toString().trim();
+                    String dateText = etDate.getText().toString().trim();
+
+                    if (!name.isEmpty() && !phone.isEmpty() && !vehicle.isEmpty() && !type.isEmpty() && !time.isEmpty() && !dateText.isEmpty()) {
+                        try {
+                            serviceDate.setTime(displayFormatter.parse(dateText));
+                        } catch (Exception e) {
+                            Log.e("ParseError", "Invalid date format", e);
+                            return;
+                        }
+
+                        String key = keyFormatter.format(serviceDate.getTime());
+                        ServiceModel newService = new ServiceModel(name, phone, vehicle, type, time, "");
+
+                        servicesRef.child(key).push().setValue(newService).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                if (key.equals(keyFormatter.format(selectedDate.getTime()))) {
+                                    loadServicesForDate(selectedDate);
+                                }
+                            } else {
+                                Log.e("FirebaseError", "Failed to add service", task.getException());
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    private void showEditServiceDialog(ServiceModel service, String serviceKey) {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_service, null);
+
+        EditText etName = dialogView.findViewById(R.id.et_customer_name);
+        EditText etPhone = dialogView.findViewById(R.id.et_customer_phone);
+        EditText etVehicle = dialogView.findViewById(R.id.et_vehicle_number);
+        EditText etType = dialogView.findViewById(R.id.et_vehicle_type);
+        EditText etTime = dialogView.findViewById(R.id.et_service_time);
+        EditText etDate = dialogView.findViewById(R.id.et_service_date);
+
+        etName.setText(service.getCustomerName());
+        etPhone.setText(service.getCustomerPhone());
+        etVehicle.setText(service.getVehicleNumber());
+        etType.setText(service.getVehicleType());
+        etTime.setText(service.getServiceTime());
+
+        etDate.setText(displayFormatter.format(selectedDate.getTime()));
+        etDate.setEnabled(false); // Don't allow editing date
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Edit Service")
+                .setView(dialogView)
+                .setPositiveButton("Update", (dialog, which) -> {
+                    String name = etName.getText().toString().trim();
+                    String phone = etPhone.getText().toString().trim();
+                    String vehicle = etVehicle.getText().toString().trim();
+                    String type = etType.getText().toString().trim();
+                    String time = etTime.getText().toString().trim();
+
+                    if (!name.isEmpty() && !phone.isEmpty() && !vehicle.isEmpty() && !type.isEmpty() && !time.isEmpty()) {
+                        String dateKey = keyFormatter.format(selectedDate.getTime());
+                        ServiceModel updated = new ServiceModel(name, phone, vehicle, type, time, serviceKey);
+                        servicesRef.child(dateKey).child(serviceKey).setValue(updated).addOnSuccessListener(unused -> {
+                            loadServicesForDate(selectedDate);
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 }
