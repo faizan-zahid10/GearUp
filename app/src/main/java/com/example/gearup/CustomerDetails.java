@@ -1,11 +1,14 @@
 package com.example.gearup;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -13,6 +16,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class CustomerDetails extends AppCompatActivity {
 
     TextView tvName,tvPhone,tvAddress,tvVehicleName,tvVehicleType,tvServiceType;
+    ImageView btnCall, btnMessage, btnLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,35 @@ public class CustomerDetails extends AppCompatActivity {
         tvVehicleType.setText(intent.getStringExtra("vehicleType"));
         tvServiceType.setText(intent.getStringExtra("service"));
 
+        btnCall.setOnClickListener(v -> {
+            String phone = tvPhone.getText().toString();
+            Intent i = new Intent(Intent.ACTION_DIAL);
+            i.setData(Uri.parse("tel:" + phone));
+            startActivity(i);
+        });
+
+
+        btnMessage.setOnClickListener(v -> {
+            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+            smsIntent.setData(Uri.parse("smsto:" + tvPhone.getText().toString()));
+            smsIntent.putExtra("sms_body", "Welcome from GearUp!");
+            startActivity(smsIntent);
+        });
+
+        btnLocation.setOnClickListener(v -> {
+            String address = tvAddress.getText().toString();
+            Uri mapUri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+            if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(mapIntent);
+            } else {
+                // Fallback if Google Maps is not installed
+                startActivity(new Intent(Intent.ACTION_VIEW, mapUri));
+            }
+        });
+
 
     }
 
@@ -44,5 +78,9 @@ public class CustomerDetails extends AppCompatActivity {
         tvVehicleName = findViewById(R.id.tvVehicleName);
         tvVehicleType = findViewById(R.id.tvVehicleType);
         tvServiceType = findViewById(R.id.tvServiceType);
+
+        btnCall = findViewById(R.id.btnCall);
+        btnMessage = findViewById(R.id.btnMessage);
+        btnLocation=findViewById(R.id.btnLocation);
     }
 }
