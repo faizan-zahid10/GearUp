@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gearup.models.ServiceModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -67,10 +68,18 @@ public class Services extends Fragment {
 
             @Override
             public void onDelete(String key) {
-                String dateKey = keyFormatter.format(selectedDate.getTime());
-                servicesRef.child(dateKey).child(key).removeValue().addOnSuccessListener(unused -> {
-                    loadServicesForDate(selectedDate);
-                });
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Confirm Deletion")
+                        .setMessage("Are you sure you want to delete this service?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            String dateKey = keyFormatter.format(selectedDate.getTime());
+                            servicesRef.child(dateKey).child(key).removeValue().addOnSuccessListener(unused -> {
+                                loadServicesForDate(selectedDate);
+                                Toast.makeText(getContext(), "Service deleted successfully", Toast.LENGTH_SHORT).show();
+                            });
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
             }
         };
 
@@ -221,6 +230,7 @@ public class Services extends Fragment {
                                 if (key.equals(keyFormatter.format(selectedDate.getTime()))) {
                                     loadServicesForDate(selectedDate);
                                 }
+                                Toast.makeText(getContext(), "New service added!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.e("FirebaseError", "Failed to add service", task.getException());
                             }
@@ -296,6 +306,7 @@ public class Services extends Fragment {
                                     if (newKey.equals(keyFormatter.format(selectedDate.getTime()))) {
                                         loadServicesForDate(selectedDate);
                                     }
+                                    Toast.makeText(getContext(), "Service updated!", Toast.LENGTH_SHORT).show();
                                 });
                             });
                         }
