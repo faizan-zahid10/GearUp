@@ -51,7 +51,7 @@ public class home extends Fragment {
         }
 
         customerRef = FirebaseDatabase.getInstance().getReference("customers");
-        serviceRef = FirebaseDatabase.getInstance().getReference("services"); // NEW
+        serviceRef = FirebaseDatabase.getInstance().getReference("services");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class home extends Fragment {
         serviceCountText = view.findViewById(R.id.service_count_text); // NEW
 
         getCustomerCount();
-        getServiceCount(); // NEW
+        getServiceCount();
 
         return view;
     }

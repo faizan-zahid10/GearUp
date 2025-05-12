@@ -21,6 +21,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new Customers();
             case 2:
                 return new Services();
+            case 3: //to be set to settings
+                return new Customers();
             default:
                 return new home();
         }
@@ -28,6 +30,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

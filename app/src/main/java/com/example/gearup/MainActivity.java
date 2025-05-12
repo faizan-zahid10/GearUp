@@ -39,15 +39,19 @@ public class MainActivity extends AppCompatActivity {
                     switch (position) {
                         case 0:
                             tab.setText("Home");
-                            tab.setIcon(R.drawable.icon_home); // Add your icon resource here
+                            tab.setIcon(R.drawable.icon_home);
                             break;
                         case 1:
                             tab.setText("Customers");
-                            tab.setIcon(R.drawable.icon_customers); // Add your icon resource here
+                            tab.setIcon(R.drawable.icon_customers);
                             break;
                         case 2:
                             tab.setText("Services");
-                            tab.setIcon(R.drawable.icon_services); // Add your icon resource here
+                            tab.setIcon(R.drawable.icon_services);
+                            break;
+                        case 3:
+                            tab.setText("Settings");
+                            tab.setIcon(R.drawable.icon_setting);
                             break;
                     }
                 }).attach();
