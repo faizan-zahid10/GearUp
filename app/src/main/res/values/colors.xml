@@ -7,4 +7,5 @@
     <color name="login_btn_bg">#0056b3</color>
     <color name="save_btn_bg">#3C9EEF</color>
     <color name="cancel_btn_bg">#9E9E9E</color>
+    <color name="appBackground">#FFFFFF</color>
 </resources>

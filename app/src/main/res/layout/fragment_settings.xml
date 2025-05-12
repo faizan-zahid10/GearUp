@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBackground">
+
+    <!-- Scrollable settings content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:layout_marginBottom="48dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:id="@+id/switch_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dark Background"
+                android:textSize="18sp" />
+
+            <View android:layout_height="16dp" android:layout_width="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="vertical"
+                android:background="@android:color/darker_gray">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About the App"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Version 1.0\nDeveloper: Your Name\nContact: your@email.com\nPowered by Firebase"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:paddingTop="4dp" />
+            </LinearLayout>
+
+            <View android:layout_height="12dp" android:layout_width="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="vertical"
+                android:background="@android:color/darker_gray"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate the App"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <View android:layout_height="12dp" android:layout_width="match_parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_clear_cache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="vertical"
+                android:background="@android:color/darker_gray"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear Cache"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed footer with developer names -->
+    <TextView
+        android:id="@+id/developer_names"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Developed by Muhammad Islam and Faizan Zahid"
+        android:textColor="@android:color/darker_gray"
+
+        android:textSize="14sp"
+        android:padding="12dp" />
+</FrameLayout>

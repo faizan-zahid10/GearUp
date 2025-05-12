@@ -22,7 +22,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 2:
                 return new Services();
             case 3: //to be set to settings
-                return new Customers();
+                return new Fragment_settings();
             default:
                 return new home();
         }
