@@ -1,43 +1,22 @@
 package com.example.gearup.models;
 
 public class ServiceModel {
-    private String id;
     private String customerName;
     private String customerPhone;
     private String vehicleNumber;
     private String vehicleType;
     private String serviceTime;
+    private String id;
 
-    // Default constructor for Firebase and manual initialization
-    public ServiceModel() {
-        // No-op constructor for Firebase
-    }
+    // Default constructor (required for Firebase)
+    public ServiceModel() {}
 
-    // Constructor with all fields
-    public ServiceModel(String customerName, String customerPhone, String vehicleNumber, String vehicleType, String serviceTime) {
+    public ServiceModel(String customerName, String customerPhone, String vehicleNumber, String vehicleType, String serviceTime, String id) {
         this.customerName = customerName;
         this.customerPhone = customerPhone;
         this.vehicleNumber = vehicleNumber;
         this.vehicleType = vehicleType;
         this.serviceTime = serviceTime;
-    }
-
-    // Constructor with id (for internal usage)
-    public ServiceModel(String id, String customerName, String customerPhone, String vehicleNumber, String vehicleType, String serviceTime) {
-        this.id = id;
-        this.customerName = customerName;
-        this.customerPhone = customerPhone;
-        this.vehicleNumber = vehicleNumber;
-        this.vehicleType = vehicleType;
-        this.serviceTime = serviceTime;
-    }
-
-    // Getters and Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,5 +58,13 @@ public class ServiceModel {
 
     public void setServiceTime(String serviceTime) {
         this.serviceTime = serviceTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

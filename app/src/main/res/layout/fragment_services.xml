@@ -8,14 +8,14 @@
     android:background="@color/app_bg"
     tools:context=".Services">
 
-    <!-- Main content layout with vertical orientation -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Date selector -->
+
         <LinearLayout
             android:id="@+id/date_container"
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:contentDescription="Next date" />
         </LinearLayout>
 
-        <!-- RecyclerView for services -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_services"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:layout_weight="1"
             android:layout_marginTop="12dp" />
 
-        <!-- No Services TextView -->
+
         <TextView
             android:id="@+id/tv_no_services"
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <!-- Floating Action Button -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_service"
         android:layout_width="wrap_content"

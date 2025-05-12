@@ -248,8 +248,25 @@ public class Services extends Fragment {
         etType.setText(service.getVehicleType());
         etTime.setText(service.getServiceTime());
 
-        etDate.setText(displayFormatter.format(selectedDate.getTime()));
-        etDate.setEnabled(false); // Don't allow editing date
+        Calendar originalDate = (Calendar) selectedDate.clone();
+        Calendar pickedDate = (Calendar) selectedDate.clone();
+
+        etDate.setText(displayFormatter.format(originalDate.getTime()));
+        etDate.setEnabled(true);
+
+        etDate.setOnClickListener(v -> {
+            int year = pickedDate.get(Calendar.YEAR);
+            int month = pickedDate.get(Calendar.MONTH);
+            int day = pickedDate.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePicker = new DatePickerDialog(getContext(), (view, y, m, d) -> {
+                pickedDate.set(y, m, d);
+                etDate.setText(displayFormatter.format(pickedDate.getTime()));
+            }, year, month, day);
+
+            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePicker.show();
+        });
 
         new AlertDialog.Builder(getContext())
                 .setTitle("Edit Service")
@@ -262,15 +279,31 @@ public class Services extends Fragment {
                     String time = etTime.getText().toString().trim();
 
                     if (!name.isEmpty() && !phone.isEmpty() && !vehicle.isEmpty() && !type.isEmpty() && !time.isEmpty()) {
-                        String dateKey = keyFormatter.format(selectedDate.getTime());
+                        String oldKey = keyFormatter.format(originalDate.getTime());
+                        String newKey = keyFormatter.format(pickedDate.getTime());
+
                         ServiceModel updated = new ServiceModel(name, phone, vehicle, type, time, serviceKey);
-                        servicesRef.child(dateKey).child(serviceKey).setValue(updated).addOnSuccessListener(unused -> {
-                            loadServicesForDate(selectedDate);
-                        });
+
+                        if (oldKey.equals(newKey)) {
+                            // Same date — just update the service
+                            servicesRef.child(oldKey).child(serviceKey).setValue(updated).addOnSuccessListener(unused -> {
+                                loadServicesForDate(selectedDate);
+                            });
+                        } else {
+                            // Date changed — move to new date node
+                            servicesRef.child(oldKey).child(serviceKey).removeValue().addOnSuccessListener(unused -> {
+                                servicesRef.child(newKey).push().setValue(updated).addOnSuccessListener(aVoid -> {
+                                    if (newKey.equals(keyFormatter.format(selectedDate.getTime()))) {
+                                        loadServicesForDate(selectedDate);
+                                    }
+                                });
+                            });
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
     }
+
 }
